@@ -1,17 +1,21 @@
 // import { ipcRenderer } from 'electron';
 
-// const information = document.getElementById('info')
-// information.innerText = `This app is using Chrome (v${window.versions.chrome()}), Node.js (v${window.versions.node()}), and Electron (v${window.versions.electron()})`
+const information = document.getElementById('status')
+information.innerText = `This app is using Chrome (v${window.versions.chrome()}), Node.js (v${window.versions.node()}), and Electron (v${window.versions.electron()})`
 
 
-// window.receiveFromD = function(func){
-//     ipcRenderer.on("ping", (event, ...args) => func(event, ...args));
-// };
+window.receiveFromD = function(func){
+    ipcRenderer.on("ping", (event, ...args) => func(event, ...args));
+};
 
 const func = async () => {
-  const response = await window.versions.ping()
-  console.log(response) // prints out 'pong'
-  alert(response)
+  // const response = await window.versions.ping()
+  // console.log(response) // prints out 'pong'
+  // information.innerText = response;
+  const domains =  JSON.stringify(  await window.versions.updateConfig())
+  information.innerText = domains;
+  alert(domains)
+
 }
 
 func()
@@ -22,11 +26,12 @@ const urlInput = document.getElementById('url')
 const status = document.getElementById('status')
 
 setButton.addEventListener('click', () => {
-
   const url = urlInput.value
   console.log(url);
   window.electronAPI.addURL(url)
 })
+
+
 urlInput.addEventListener('click', () => {
   const url = urlInput.value
   window.electronAPI.addURL(url)
@@ -34,14 +39,12 @@ urlInput.addEventListener('click', () => {
 
 const counter = document.getElementById('queueTable')
 
-window.electronAPI.onUpdateConfig((value) => {
+window.versions.updateConfig((value) => {
   console.log(value);
   status.innerText = value.toString()
-  // window.electronAPI.counterValue(newValue)
 })
 
 window.electronAPI.configDomains((value) => {
   console.log(value);
   status.innerText = value.toString()
-  // window.electronAPI.counterValue(newValue)
 })
