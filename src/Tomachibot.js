@@ -18,7 +18,9 @@ async function Tomachibot(myURL) {
     let verbose = true; // regular logs 
     let windowSize =  config.get('windowSize');
     let domains = config.get('domains'); // array of 10 hits
-
+    let url = myURL;
+    let dd =  config.get('defaultDelay');
+    const ts =  Date.now();
     config.set('lastRun', Date.now());
     // config.set('domains', []); // wipe db 
 
@@ -31,9 +33,7 @@ async function Tomachibot(myURL) {
         return (domains.domain == d);
     }
 
-    let url = myURL;
-    let dd =  config.get('defaultDelay');
-    const ts =  Date.now();
+
     
     /////////////// ENTRYPOINT
     if (myURL) {

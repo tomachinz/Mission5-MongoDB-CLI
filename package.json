@@ -3,7 +3,7 @@
   "productName": "Tomachibot",
   "version": "1.0.1",
   "description": "Web Crawler",
-  "main": "src/index.js",
+  "main": "src/main.js",
   "scripts": {
     "cli": "nodemon src/server.js",
     "start": "electron-forge start",
@@ -19,6 +19,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@picocss/pico": "^2.1.1",
     "configstore": "^7.0.0",
     "dpkg": "^1.0.0",
     "electron-squirrel-startup": "^1.0.1",

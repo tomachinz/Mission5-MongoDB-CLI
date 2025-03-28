@@ -3,18 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <title>Hello World!</title>
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../node_modules/@picocss/pico/css/pico.css">
+
+    
     <meta
       http-equiv="X-Content-Security-Policy"
       content="default-src 'self'; script-src 'self'"
     />
   </head>
-  <body>
+  <body id="body">
     <div id="info">
       <h1>💖 Tomachibot Web Crawler</h1>
+      <button id-"start" type="button">Start</button>
+      <button id-"Pause" type="button" disabled>Pause </button>
+      <input type="checkbox" id="depth" aria-label="show hidden headless browser" /> Headless Chrome or Visible? 
       <p id="status">Welcome to Tomachibot GUI</p>
-      URL: <input id="url" />
-      <button id="btn" type="button">Add URL to Crawl Queue</button>
+      URL: <input id="urlInput" />
+      <button id="addURL" type="button">Add URL to Crawl Queue</button>
+     <br>
+
       <div>
         <table id="queueTable">
           <thead>

@@ -1,6 +1,10 @@
-const express = require("express");
-const puppeteer = require("puppeteer");
-const {urlmodule} = require('url');
+import express from "express";
+import puppeteer from "puppeteer";
+import urlmodule from 'node:url';
+
+// const express = require("express");
+// const puppeteer = require("puppeteer");
+// const {urlmodule} = require('url');
 const app = express();
 const port = 3000;
 const host = "localhost";
@@ -10,13 +14,13 @@ let isRunning, isListening = false;
 let queue = ["https://www.funk.co.nz/", "https://tomachi.co/"];  
 let registry, url, html, error, browser;
 
-function api(u) {
+const api = (u) =>  {
     if (typeof u !== undefined) {
         url = urlmodule.parse(u);
         pushQueue(url);
     }
 }
-module.exports = { api }    
+export default  api     
 
 if (!isListening) {
     console.log(`isListening: ${isListening}`);
