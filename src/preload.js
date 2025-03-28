@@ -3,12 +3,6 @@
 // import { contextBridge, ipcRenderer } from 'electron';
 const { contextBridge, ipcRenderer } = require('electron')
 
-
-// import { createRequire } from "module";
-// const require = createRequire(import.meta.url);
-// const contextBridge = require('electron').contextBridge;
-// const ipcRenderer = require('electron').ipcRenderer;
-
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
