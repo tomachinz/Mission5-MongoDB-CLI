@@ -12,8 +12,8 @@ const func = async () => {
   // const response = await window.versions.ping()
   // console.log(response) // prints out 'pong'
   // information.innerText = response;
-  const domains =  JSON.stringify(  await window.versions.updateConfig())
-  information.innerText = domains;
+  const domains =   await window.versions.updateConfig()
+  information.innerText = JSON.stringify( domains );
   alert(domains)
 
 }
