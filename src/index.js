@@ -1,16 +1,25 @@
 
 import { app, Tray, Menu, nativeImage, BrowserWindow, ipcMain  } from 'electron';
-import path from 'node:path';
+import path from 'path';
 import Tomachibot from "./Tomachibot.js";
 // import  main from './main.js';
 const __dirname = path.resolve();
+// HOW TO HANDLE REQUIRE AND IMPORT IN SAME PROJECT:
+// https://stackoverflow.com/questions/69099763/referenceerror-require-is-not-defined-in-es-module-scope-you-can-use-import-in 
+
+
+console.log(path.join( __dirname ,'src',  '/preload.js'))
+// console.log(path.join( path.dirname() ,  '/preload.js'))
 
 // const { app, Tray, Menu, nativeImage, BrowserWindow, ipcMain  } = require('electron');
 // const path = require('node:path');
 // const main = require('./main.js');
 // const Tomachibot = require( "./Tomachibot.cjs");
 
-// Tomachibot();
+let config = await Tomachibot();
+let domains = config.get('domains');
+let mainWindow;
+// console.log(config.get('domains'));
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // if (require('electron-squirrel-startup')) {
@@ -18,12 +27,15 @@ const __dirname = path.resolve();
 // }
 
 const createWindow = () => {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     icon: './assets/tcorp-flames-512px-icon.png',
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 800,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'src', 'preload.js'),
+      // preload: path.join( path.dirname() ,  '/preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false
     },
   });
 
@@ -40,15 +52,19 @@ app.whenReady().then(() => {
   createWindow();
   const icon = nativeImage.createFromPath('./assets/tcorp-flames-512px-icon.png')
   const tray = new Tray(icon)
-  console.log('Hello from Electron 👋')
-  
+  domains = config.get('domains');
+  console.log(domains)
+
+  mainWindow.webContents.send('update-config', domains)
+  console.log('Tomachibot is a 👋')
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
-      console.log('Hello from Electron 👋');
-      api();
     }
   });
+  // api();
+
 });
 
 

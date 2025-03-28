@@ -3,8 +3,8 @@ import Configstore from 'configstore';
 
 
 export default function ConfigModule() {
-    const tomachibot = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-    const config = new Configstore(tomachibot.name, { // Create a Configstore instance.
+    const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+    const config = new Configstore(packageJson.name, { // Create a Configstore instance.
         firstRun: Date.now(),
         lastRun: Date.now(),
         runs: 0,
@@ -31,6 +31,6 @@ export default function ConfigModule() {
     });
 
 
-
+    // console.log(`config: ${JSON.stringify(config)}`);
     return config;
 }

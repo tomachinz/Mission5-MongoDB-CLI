@@ -1,7 +1,7 @@
 {
-  "name": "carpuppetmaster",
-  "productName": "carpuppetmaster",
-  "version": "1.0.0",
+  "name": "tomachibot",
+  "productName": "Tomachibot",
+  "version": "1.0.1",
   "description": "Web Crawler",
   "main": "src/index.js",
   "scripts": {

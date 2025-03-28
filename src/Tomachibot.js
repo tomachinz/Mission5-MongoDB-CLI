@@ -14,7 +14,6 @@ import URL from 'node:url';
 
 async function Tomachibot(myURL) {
     let config = ConfigModule();
-    console.log(config);
     let logdebug = true;; // much more detailed
     let verbose = true; // regular logs 
     let windowSize =  config.get('windowSize');
@@ -60,9 +59,9 @@ async function Tomachibot(myURL) {
     }
 
 
-    debug(`config: ${JSON.stringify(  config)}`);
-    const configJson = JSON.parse(fs.readFileSync(config.path, 'utf8'));
-    debug(`domains: ${JSON.stringify(  domains)}`);
+    // log(`config: ${JSON.stringify(  config)}`);
+    // const configJson = JSON.parse(fs.readFileSync(config.path, 'utf8'));
+    // debug(`domains: ${JSON.stringify(  domains)}`);
 
 
     async function startCrawl(url) {
@@ -77,7 +76,7 @@ async function Tomachibot(myURL) {
         // const thisdomain = rolling.domain;
         // rolling.push(url.hostname,ts);
         config.set('domains', domains);
-        console.log(domainHasPrefs(domain));
+        debug(domainHasPrefs(domain));
 
         debug(`domains.length: ${domains.length} at Unix Epoch ${ts}`);
         debug(`domains: ${domains}`);
@@ -93,9 +92,9 @@ async function Tomachibot(myURL) {
 
         const page =  await browser.newPage();
         await page.goto(url.href);        
-        log(`done: ${url.href}`);
+        debug(`done: ${url.href}`);
     }
-
+    return config;
 }
 
 

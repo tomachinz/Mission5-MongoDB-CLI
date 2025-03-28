@@ -12,11 +12,12 @@
   <body>
     <div id="info">
       <h1>💖 Tomachibot Web Crawler</h1>
-      <p>Welcome to Tomachibot GUI</p>
-      URL: <input id="title" />
-      <button id="btn" type="button">Add to Crawl Queue</button>
+      <p id="status">Welcome to Tomachibot GUI</p>
+      URL: <input id="url" />
+      <button id="btn" type="button">Add URL to Crawl Queue</button>
+      <div id="queueTable"></div>
     </div>
   </body>
 
-  <script src="./renderer.js"></script>
+  <script src="./renderer.js" type="module"></script>
 </html>
