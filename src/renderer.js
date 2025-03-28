@@ -5,7 +5,7 @@ information.innerText = `This app is using Chrome (v${window.versions.chrome()})
 
 
 window.receiveFromD = function(func){
-    ipcRenderer.on("ping", (event, ...args) => func(event, ...args));
+    ipcRenderer.on("updateConfig", (event, ...args) => func(event, ...args));
 };
 
 const func = async () => {
@@ -13,8 +13,28 @@ const func = async () => {
   // console.log(response) // prints out 'pong'
   // information.innerText = response;
   const domains =   await window.versions.updateConfig()
-  information.innerText = JSON.stringify( domains );
-  alert(domains)
+  information.innerText = domains.length; //JSON.stringify( domains );
+  const queueTable = document.getElementById('queueTable')
+  queueTable.removeChild(queueTable.firstChild);
+  // const queuebody = document.getElementById('queuebody')
+  const results = document.createElement('tbody');
+
+  for (let i = 0; i < domains.length; i++) {
+    const row = document.createElement('tr');
+    const cell1 = document.createElement('td');
+    const cell2 = document.createElement('td');
+
+    cell1.textContent = i;
+    cell2.textContent = domains[i].domain;
+    row.appendChild(cell1);
+    row.appendChild(cell2);
+    results.appendChild(row);
+    // alert(i);
+  }
+  
+  
+  queueTable.appendChild(results)
+  // alert(domains)
 
 }
 
@@ -37,7 +57,6 @@ urlInput.addEventListener('click', () => {
   window.electronAPI.addURL(url)
 })
 
-const counter = document.getElementById('queueTable')
 
 window.versions.updateConfig((value) => {
   console.log(value);

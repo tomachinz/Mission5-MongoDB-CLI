@@ -15,7 +15,17 @@
       <p id="status">Welcome to Tomachibot GUI</p>
       URL: <input id="url" />
       <button id="btn" type="button">Add URL to Crawl Queue</button>
-      <div id="queueTable"></div>
+      <div>
+        <table id="queueTable">
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody id="queuebody"></tbody>
+        </table>
+      </div>
     </div>
   </body>
 
