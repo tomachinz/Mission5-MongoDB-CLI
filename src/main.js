@@ -8,9 +8,7 @@ const __dirname = path.resolve();
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-
-import crypto from 'crypto'
-const fs = require('fs')
+// const fs = require('fs')
 
 // import  main from './main.js';
 // HOW TO HANDLE REQUIRE AND IMPORT IN SAME PROJECT:
@@ -40,10 +38,9 @@ const createWindow = () => {
       nodeIntegration: false
     },
   });
-  // derkaMenus().catch();
 
   mainWindow.loadFile(path.join(__dirname, "src", 'index.html'));
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -55,14 +52,15 @@ app.whenReady().then(() => {
   setTimeout(() => {
    ipcMain.handle('ping', () => 'pong')
   }, 5000)
-  ipcMain.handle('updateConfig', () => domains)
+  ipcMain.handle('start', () => domains)
   createWindow();
   
   const icon = nativeImage.createFromPath('./assets/tcorp-flames-512px-icon.png')
   const tray = new Tray(icon)
 
   mainWindow.webContents.send('update-config', domains)
-  console.log('Tomachibot is a 👋')
+  console.log('Electronic WebSpider 👋')
+  derkaMenus().catch();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -72,7 +70,6 @@ app.whenReady().then(() => {
   // api();
 
 });
-
 
 app.on('window-all-closed', () => {
   app.quit();

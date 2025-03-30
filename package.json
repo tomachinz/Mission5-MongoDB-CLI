@@ -1,6 +1,6 @@
 {
-  "name": "tomachibot",
-  "productName": "Tomachibot",
+  "name": "electronic-web-crawler",
+  "productName": "🧜‍♂️ Electronic 🕸️ Web 🕷️ Crawler 🔥",
   "version": "1.0.1",
   "description": "Web Crawler",
   "main": "src/main.js",

@@ -9,11 +9,11 @@ const { contextBridge, ipcRenderer, ipcMain } = require('electron')
 //   desktop: true
 // }
 
-contextBridge.exposeInMainWorld('versions', {
+contextBridge.exposeInMainWorld('tomachibot', {
   desktop: () => true,
-  node: () => process.versions.node,
-  chrome: () => process.versions.chrome,
-  electron: () => process.versions.electron,
+  node: () => process.tomachibot.node,
+  chrome: () => process.tomachibot.chrome,
+  electron: () => process.tomachibot.electron,
   ping: () => ipcRenderer.invoke('ping'),
   setTitle: () => ipcRenderer.send('set-title', "fuck you " + title),
   addURL: () => ipcRenderer.invoke('updateConfig') ,
@@ -21,15 +21,17 @@ contextBridge.exposeInMainWorld('versions', {
 
 })
 
-contextBridge.exposeInMainWorld('versions', {
+contextBridge.exposeInMainWorld('tomachibot', {
   addURL: () => ipcMain.send('set-title', "fuck you " + title),
 })
 const worldId = 0;
 contextBridge.exposeInIsolatedWorld(worldId, 'tomachibot', {
     desktop: () => true,
+    rightClick: () =>  ipcRenderer.invoke('pong'),
+    doStart: () => ipcMain.send('do-start'),
     doThing: () => ipcMain.send('do-thing')
   })
-contextBridge.exposeInMainWorld('electronAPI', {
+contextBridge.exposeInMainWorld('tomachibot', {
   onUpdateConfig: (callback) => ipcRenderer.on('update-config', (_event, value) => callback(value)),
   configDomains: (value) => ipcRenderer.send('update-config', value)
 })

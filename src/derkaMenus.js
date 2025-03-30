@@ -7,7 +7,7 @@ const template = [
   // { role: 'appMenu' }
   ...(isMac
     ? [{
-        label: app.name,
+        label: app.productName,
         submenu: [
           { role: 'about' },
           { type: 'separator' },
@@ -107,6 +107,12 @@ const template = [
     ]
   }
 ]
+
+
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)
+
+
 
 const derkaMenus = (template) => {
   Menu.buildFromTemplate(template)
