@@ -12,6 +12,7 @@ export default function ConfigModule() {
         pagesOdometer: 0, 
         windowSize: 10,
         defaultDelay: 1500,
+        verbose: false,
         domains: [{
             domain: "funk.co.nz",
             hits: [1737779206588, 1737779206589]

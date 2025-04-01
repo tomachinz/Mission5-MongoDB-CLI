@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import fs from 'node:fs';
 import ConfigModule from "./ConfigModule.js";
 import URL from 'node:url';
+import debug from './debug.js';
 // import packageJson from  JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
 
@@ -14,10 +15,9 @@ import URL from 'node:url';
 
 async function Tomachibot(myURL) {
     let config = ConfigModule();
-    let logdebug = true;; // much more detailed
-    let verbose = true; // regular logs 
     let windowSize =  config.get('windowSize');
     let domains = config.get('domains'); // array of 10 hits
+    debug(`domains: ${JSON.stringify(domains)}`);
     let url = myURL;
     let dd =  config.get('defaultDelay');
     const ts =  Date.now();
@@ -31,37 +31,16 @@ async function Tomachibot(myURL) {
     function domainHasPrefs(d) {
         // return (domains['domain'] == d);
         return (domains.domain == d);
-    }
-
-
-    
+    }  
     /////////////// ENTRYPOINT
     if (myURL) {
         url = new URL(myURL); 
         startCrawl(url);
     }
 
-    function oldestHit() {
-
-    }
-    function log(s){
-        if (verbose) {
-            console.log(s)
-        }
-    }
-    function debug(s) {
-        if (logdebug) {
-            console.error(s)
-            if (typeof s == "[object Object]") {
-                console.log(Reflect.getPrototypeOf(s))
-            }
-        }
-    }
-
-
-    // log(`config: ${JSON.stringify(  config)}`);
+    debug(`config: ${JSON.stringify(  config)}`);
     // const configJson = JSON.parse(fs.readFileSync(config.path, 'utf8'));
-    // debug(`domains: ${JSON.stringify(  domains)}`);
+    debug(`domains: ${JSON.stringify(  domains)}`);
 
 
     async function startCrawl(url) {
@@ -72,9 +51,9 @@ async function Tomachibot(myURL) {
         //     "hostname": domain,
         //     hits: [1737779206588, 1737779206589]
         // }
-        // rolling = rolling.reduce(domainReduce, domain); // array of 10 hits
-        // const thisdomain = rolling.domain;
-        // rolling.push(url.hostname,ts);
+        rolling = rolling.reduce(domainReduce, domain); // array of 10 hits
+        domain = rolling.domain;
+        rolling.push(url.hostname,ts);
         config.set('domains', domains);
         debug(domainHasPrefs(domain));
 

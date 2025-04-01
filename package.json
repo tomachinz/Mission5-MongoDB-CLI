@@ -1,12 +1,13 @@
 {
-  "name": "electronic-web-crawler",
-  "productName": "🧜‍♂️ Electronic 🕸️ Web 🕷️ Crawler 🔥",
-  "version": "1.0.1",
-  "description": "Web Crawler",
+  "name": "chronic-electronic-web-crawler",
+  "productName": "🧜‍♂️Chronic🔥Electronic🕸️Web-Crawler🕷️",
+  "version": "1.0.2",
+  "description": "InfoSec Research Web Crawler and Sock Puppeteer",
   "main": "src/main.js",
   "scripts": {
     "cli": "nodemon src/server.js",
     "start": "electron-forge start",
+    "watch": "watch electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
