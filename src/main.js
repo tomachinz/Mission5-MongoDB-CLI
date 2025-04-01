@@ -6,7 +6,9 @@ import api from './api.js';
 import derkaMenus from './derkaMenus.js';
 import { exit } from 'process';
 import debug from './debug.js';
+
 const __dirname = path.resolve();
+
 
 // import { createRequire } from "module";
 // const require = createRequire(import.meta.url);

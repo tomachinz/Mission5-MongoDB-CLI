@@ -1,13 +1,11 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 import { contextBridge, ipcRenderer, ipcMain } from 'electron';
-// const { contextBridge, ipcRenderer, ipcMain } = require('electron')
 import ConfigModule from "./ConfigModule.js";
-// const ConfigModule = require( "./ConfigModule.js");
 
 let domains = ConfigModule.get('domains');
 let mainBridge = {
-  terminate: () => ipcRenderer.invoke('terminate'),
+  terminate: () => ipcMain.invoke('terminate'),
   addURL: (value) => value
 }
 contextBridge.exposeInIsolatedWorld('renderBridge',renderBridge)
