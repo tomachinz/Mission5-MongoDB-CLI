@@ -5,10 +5,11 @@
 // const  ipcMain = require('electron');
 // const rightClickMenu = require('rightClickMenu.js')
 
-const body    = document.body;
+
+const body    = document.getElementById('body');
 let addURL  = document.getElementById('addURL')
-let urlInput= document.getElementById('debug')
-const restart = document.getElementById('restart')
+let showConsole= document.getElementById('showConsole')
+let urlInput= document.getElementById('urlInput')
 const activateChronic = document.getElementById('activateChronic')
 const pause   = document.getElementById('pause')
 
@@ -20,42 +21,55 @@ let ticker    = document.getElementById('ticker')
 //   ticker.innerHTML ="test"; domains[0].toString()
 // })
 
-document.body.addEventListener('onload', async () => {
-  console.log(body)
-  // alert("page has loaded DERKA!!!!!")
-  const isDarkMode = await window.darkMode.toggle()
-  document.getElementById('theme-source').innerHTML = isDarkMode ? 'Dark' : 'Light'
-  window.tomachibot.updateConfig((event, value) => {
-    let ticker = document.querySelector('#ticker');
-    console.log(value);
-    ticker.innerText = value.toString()
+
+
+
+
+async function lert() {
+  // alert(window.myAPI.doAThing());
+  // console.log(body)
+  const restart = document.getElementById('restart')
+
+  restart.addEventListener('click', () => {
+      alert("TERMINATE!!!!!")
+    try {
+      window.renderBridge.kill()
+    } catch(e) {
+     console.log("only a slight error")
+    }
+
   })
-})
-addURL.addEventListener('click', () => {
-  urlInput= document.getElementById('debug')
+  // const isDarkMode = await window.darkMode.toggle()
+  // document.getElementById('theme-source').innerHTML = isDarkMode ? 'Dark' : 'Light'
+  // window.tomachibot.updateConfig((event, value) => {
+  //   let ticker = document.querySelector('#ticker');
+  //   console.log(value);
+  //   ticker.innerText = value.toString()
+  // })
 
-  const url = urlInput.value
-  console.log(url);
-  // window.renderBridge.addURL(url)
-})
-activateChronic.addEventListener('click', () => {
-  const url = urlInput.value
-  console.log(url);
-  window.tomachibot.pong()
-  goChronic(url)
-})
-restart.addEventListener('click', () => {
-  window.tomachibot.terminate()
-  alert("page will terminate i hope DERKA!!!!!")
+  // showConsole.addEventListener('click', () => {
+  //   console.log("showConsole clicked")
+  //   alert("page has loaded DERKA!!!!!")
+  // })
+}
 
-})
-pause.addEventListener('click', () => {
-  window.tomachibot.pause()
-})
-urlInput.addEventListener('onblur', () => {
-  const url = urlInput.value
-  // window.tomachibot.addURL(url)
-})
+
+document.addEventListener('DOMContentLoaded', lert);
+
+// addURL.addEventListener('click', () => {
+//   alert("page has loaded DERKA!!!!!")
+//   urlInput= document.getElementById('urlInput')
+//   const url = urlInput.value
+//   console.log(url);
+//   window.renderBridge.addURL(url)
+// })
+
+
+
+// urlInput.addEventListener('onblur', () => {
+//   const url = urlInput.value
+//   // window.tomachibot.addURL(url)
+// })
 
 
 

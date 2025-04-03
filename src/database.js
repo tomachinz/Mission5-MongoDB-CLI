@@ -1,10 +1,12 @@
 import Customer from './models/customer.js';
 import mongoose from 'mongoose';
 
-mongoose.Promise = global.Promise;
 
+mongoose.Promise = global.Promise;
 try {
-  const db = mongoose.connect('mongodb://localhost:27017/tomachibot', {
+  // const db = mongoose.connect('mongodb+srv://zackdoor.soul', {
+  const db = mongoose.connect('mongodb://mongo.soul:27017', {
+  // const db = mongoose.connect('mongodb+srv://cluster64678.i7qkksi.mongodb.net', {
   // useMongoClient: true
 });
 } catch (e) {

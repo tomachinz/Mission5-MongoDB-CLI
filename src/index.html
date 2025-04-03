@@ -3,17 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <title>🧜‍♂️ Electronic🕸️Web🕷️Crawler 🔥</title>
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'none'" /> -->
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="../node_modules/@picocss/pico/css/pico.css" />
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'" /> -->
-    <!-- <script type="import-map">
-      {
-        "imports": {
-          "electron": "/node_modules/electron/dist/electron.js",
-        }
-      }
-    </script> -->
   </head>
   <body id="body">
     <div id="info" class="container">
@@ -53,9 +45,10 @@
         const domains = await window.tomachibot.getConfig() aria-label="show
         hidden headless browser" /> '74
         <br />
-        <button id="debug" type="button" class="red">Debug Console</button>
+        <button id="showConsole" type="button" class="red">
+          Show Debug Console
+        </button>
         <button id="restart" type="button" class="red">RESTART App</button>
-
         <input id="urlInput" value="https://" />
         <button id="addURL" type="button">Add URL to Crawl Queue</button>
       </form>
@@ -75,8 +68,8 @@
       </div>
     </div>
   </body>
+  <script src="./renderer.js"></script>
 
   <!-- <script src="./preload.js" type="module"></script> -->
   <!-- <script src="./renderer.js" type="module"></script> -->
-  <script src="./renderer.js"></script>
 </html>

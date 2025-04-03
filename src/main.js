@@ -1,10 +1,10 @@
 
 import { app, Tray, nativeImage, BrowserWindow, ipcMain  } from 'electron';
-import path from 'path';
+import path from 'node:path';
 import Tomachibot from "./Tomachibot.js";
 import api from './api.js';
 import derkaMenus from './derkaMenus.js';
-import { exit } from 'process';
+// import { exit } from 'process';
 import debug from './debug.js';
 
 const __dirname = path.resolve();
@@ -30,7 +30,7 @@ let icon = nativeImage.createFromPath('./assets/tcorp-flames-512px-icon.png')
 
 const createWindow = async () => { 
   domains = config.get('domains');
-    console.log(domains)
+    debug(domains)
 
     mainWindow = new BrowserWindow({
     // icon: './assets/tcorp-flames-512px-icon.png',
@@ -38,9 +38,10 @@ const createWindow = async () => {
     width: 1080,
     height: 1080,
     webPreferences: {
+      sandbox: false,
       // preload: path.resolve(path.join(__dirname, 'src',  'preload.js')),
-      // preload: path.resolve('./src/preload.js'),
-      preload: './src/preload.js',
+      preload: path.join('src', './preload.js'),
+      // preload: './src/preload.js',
       contextIsolation: true,
       nodeIntegration: false
     },
@@ -55,13 +56,30 @@ const createWindow = async () => {
   })
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+
+ipcMain.on('port', (event) => {
+  const port = event.ports[0]
+  port.on('message', (event) => {
+    const data = event.data;
+    process.exit(0);
+  })
+  port.start()
+})
+
+function handleTerminate (event, title) {
+  const webContents = event.sender
+  const win = BrowserWindow.fromWebContents(webContents)
+  win.setTitle(title)
+  process.exit(0);
+
+}
+  ipcMain.on('terminate', handleTerminate)
+
+
 app.whenReady().then(async() => {
 
   domains = config.get('domains');
-  console.log(domains)
+  // console.log(domains)
   setTimeout(() => {
 
     ipcMain.handle('ping', () => {
@@ -72,7 +90,7 @@ app.whenReady().then(async() => {
   await createWindow();
 
   mainWindow.webContents.send('updateConfig', domains)
-  console.log(domains)
+  // console.log(domains)
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -82,9 +100,7 @@ app.whenReady().then(async() => {
     tray.setContextMenu(contextMenu);
     tray.setToolTip('Chronic Electronic WebSpider');
   });
-  ipcMain.on('terminate', () => {
-    process.exit(0);
-  });
+
   ipcMain.on('add-url', (event, newurl) => {
     handleAddURL(event, newurl);
   });
