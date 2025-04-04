@@ -3,8 +3,7 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
 module.exports = {
   packagerConfig: {
-    // asar: true,
-    icon: './assets/tcorp-flames-512px-icon' // no file extension required
+    asar: true,
   },
   rebuildConfig: {},
   makers: [
@@ -18,53 +17,32 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {
-        options: {
-            icon: './assets/tcorp-flames-512px-icon.png'
-        }
-      },
+      config: {},
     },
-    {
-      name: '@electron-forge/maker-squirrel',
-      config: {
-        certificateFile: './cert.pfx',
-        certificatePassword: process.env.CERTIFICATE_PASSWORD
-      }
-    },
-    {
-      name: '@electron-forge/maker-flatpak',
-      config: {
-        options: {
-          categories: ['Video'],
-          mimeType: ['video/h264']
-        }
-      }
-    },
-    //  {
-    //   name: '@electron-forge/maker-dmg',
-    //   config: {
-    //     background: './assets/dmg-background.png',
-    //     format: 'ULFO'
-    //   }
-    // }
     {
       name: '@electron-forge/maker-rpm',
       config: {},
+    },    
+    {
+      name: '@electron-forge/maker-appimage',
+      platforms: ['linux'],
     },
   ],
-  // plugins: [
-  //   {
-  //     name: '@electron-forge/plugin-auto-unpack-natives',
-  //     config: {},
-  //   },
-  //   new FusesPlugin({ // Fuses are used to enable/disable various Electron functionality
-  //     version: FuseVersion.V1, // at package time, before code signing the application
-  //     [FuseV1Options.RunAsNode]: false,
-  //     [FuseV1Options.EnableCookieEncryption]: true,
-  //     [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
-  //     [FuseV1Options.EnableNodeCliInspectArguments]: false,
-  //     [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
-  //     [FuseV1Options.OnlyLoadAppFromAsar]: true,
-  //   }),
-  // ],
+  plugins: [
+    {
+      name: '@electron-forge/plugin-auto-unpack-natives',
+      config: {},
+    },
+    // Fuses are used to enable/disable various Electron functionality
+    // at package time, before code signing the application
+    new FusesPlugin({
+      version: FuseVersion.V1,
+      [FuseV1Options.RunAsNode]: false,
+      [FuseV1Options.EnableCookieEncryption]: true,
+      [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
+      [FuseV1Options.EnableNodeCliInspectArguments]: false,
+      [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
+      [FuseV1Options.OnlyLoadAppFromAsar]: true,
+    }),
+  ],
 };

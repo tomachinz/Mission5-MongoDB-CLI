@@ -1,7 +1,7 @@
 import express from "express";
 import puppeteer from "puppeteer";
 import urlmodule from 'node:url';
-import debug from './debug.js';
+import { log } from './debug.js';
 
 const app = express();
 const port = 3000;
@@ -13,7 +13,7 @@ let queue = ["https://www.funk.co.nz/", "https://tomachi.co/"];
 let registry, url, html, error, browser;
 
 const api = (u) =>  {
-    debug(`u: ${u}`);
+    log(`u: ${u}`);
 
     if (typeof u !== "undefined") {
         url = urlmodule.parse(u);
@@ -39,7 +39,8 @@ const api = (u) =>  {
             // ipc.on('tray-removed', function () {
             //     ipc.send('remove-tray')
             //     trayOn = false
-            //     document.getElementById('tray-countdown').innerHTML = ''
+            //     document.getElimport debug from './debug.js';
+ementById('tray-countdown').innerHTML = ''
             // })
 
     }
@@ -47,7 +48,7 @@ const api = (u) =>  {
 export default  api     
 
 if (!isListening) {
-    debug(`isListening: ${isListening}`);
+    log(`isListening: ${isListening}`);
     isListening = true;
     try {
         app.listen(port, () => {
@@ -59,7 +60,7 @@ if (!isListening) {
         console.log(`Error, server is listening.  ${isListening}`);
         process.exit(1);
     } finally {
-        debug(`finally isListening: ${isListening}`);
+        log(`finally isListening: ${isListening}`);
         if (!isListening) {
             app.listen(port+1, () => {
                 console.log(`listening on http://${host}:${port+1} to add to queue hit /crawl?url=https://funk.nz/`);
@@ -71,8 +72,11 @@ if (!isListening) {
 
       
 async function pushQueue(url) {
-    queue.push(url); 
+    console.log(qeueu);
+    if (queue.find((url) => {
 
+    }))
+    queue.push(url); 
     if (!isRunning) {
         isRunning = true;
         console.log(`URL seems legit, starting crawler...`);
@@ -82,7 +86,6 @@ async function pushQueue(url) {
     } else {
         console.log(`Added URL to queue: ${url}`);   
     }
-
 }
 async function crawl(url) {
 
@@ -95,6 +98,7 @@ async function crawl(url) {
         await page.close();
         res.status(200).send(html);
         registry[url] = await page.$eval("*", (el) => el.innerText);
+        // CRAWLING / BUILDING ARRAY OF LINKS ON THE PAGE
         const hrefs = await page.$$eval("*", (anchorEls) => 
             anchorEls.map((a) => a.href));
         const filteredHrefs = hrefs.filter((href) => 
@@ -113,6 +117,7 @@ async function crawl(url) {
 
     } catch(error) {
         console.error(error);
+        console.log(`uniqueHrefs: ${uniqueHrefs}`);
         pause += 2000;
     } finally {
         browser.close();

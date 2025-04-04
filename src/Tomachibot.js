@@ -2,22 +2,20 @@ import puppeteer from 'puppeteer';
 import fs from 'node:fs';
 import ConfigModule from "./ConfigModule.js";
 import URL from 'node:url';
-import debug from './debug.js';
+import  log  from './debug.js';
 // import packageJson from  JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
-
-
+let rolling;
 // const puppeteer =  require('puppeteer');
 // const fs =  require('node:fs');
 // const ConfigModule =  require("./ConfigModule.cjs");
 // const URL = require( 'node:url');
-// const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
 async function Tomachibot(myURL) {
     let config = ConfigModule();
     let windowSize =  config.get('windowSize');
     let domains = config.get('domains'); // array of 10 hits
-    debug(`domains: ${JSON.stringify(domains)}`);
+    log(`domains: ${JSON.stringify(domains)}`);
     let url = myURL;
     let dd =  config.get('defaultDelay');
     const ts =  Date.now();
@@ -34,13 +32,13 @@ async function Tomachibot(myURL) {
     }  
     /////////////// ENTRYPOINT
     if (myURL) {
-        url = new URL(myURL); 
-        startCrawl(url);
+        // url = URL(myURL); 
+        startCrawl(myURL);
     }
 
-    debug(`config: ${JSON.stringify(  config)}`);
+    log(`config: ${JSON.stringify(  config)}`);
     // const configJson = JSON.parse(fs.readFileSync(config.path, 'utf8'));
-    debug(`domains: ${JSON.stringify(  domains)}`);
+    log(`domains: ${JSON.stringify(  domains)}`);
 
 
     async function startCrawl(url) {
@@ -51,18 +49,19 @@ async function Tomachibot(myURL) {
         //     "hostname": domain,
         //     hits: [1737779206588, 1737779206589]
         // }
+        // rolling = domains[];
         rolling = rolling.reduce(domainReduce, domain); // array of 10 hits
         domain = rolling.domain;
         rolling.push(url.hostname,ts);
         config.set('domains', domains);
-        debug(domainHasPrefs(domain));
+        log(domainHasPrefs(domain));
 
-        debug(`domains.length: ${domains.length} at Unix Epoch ${ts}`);
-        debug(`domains: ${domains}`);
-        debug( domains[0], domains[1], domains[2]);
-        debug(`config is: ${config}`);
-        debug("defaultDelay: ", dd);
-        debug("windowSize: ", windowSize);
+        log(`domains.length: ${domains.length} at Unix Epoch ${ts}`);
+        log(`domains: ${domains}`);
+        log( domains[0], domains[1], domains[2]);
+        log(`config is: ${config}`);
+        log("defaultDelay: ", dd);
+        log("windowSize: ", windowSize);
 
         const browser = await puppeteer.launch({
             headless: false,
@@ -71,7 +70,7 @@ async function Tomachibot(myURL) {
 
         const page =  await browser.newPage();
         await page.goto(url.href);        
-        debug(`done: ${url.href}`);
+        log(`done: ${url.href}`);
     }
     return config;
 }

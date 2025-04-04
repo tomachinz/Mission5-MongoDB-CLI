@@ -5,10 +5,10 @@ import mongoose from 'mongoose';
 mongoose.Promise = global.Promise;
 try {
   // const db = mongoose.connect('mongodb+srv://zackdoor.soul', {
-  const db = mongoose.connect('mongodb://mongo.soul:27017', {
-  // const db = mongoose.connect('mongodb+srv://cluster64678.i7qkksi.mongodb.net', {
-  // useMongoClient: true
-});
+  // const db = mongoose.connect('mongodb://mongo.soul:27017', { //10.0.0.44
+  // const db = mongoose.connect('mongodb://10.0.0.44:27017', { //10.0.0.44
+  const db = mongoose.connect('mongodb://tom:2Fub@r@127.0.0.1:27017/mission5', {});
+  // const db = mongoose.connect('mongodb://10.0.0.44', {});
 } catch (e) {
   console.error('Error connecting to MongoDB', e);
   process.exit(1);

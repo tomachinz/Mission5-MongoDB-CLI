@@ -2,15 +2,17 @@
 
 import { addCustomer, findCustomer } from './database.js';
 import { Command } from 'commander';
-// import ConfigModule from  './ConfigModule.js';
+import ConfigModule from  './ConfigModule.js';
+import Tomachibot from  './Tomachibot.js';
+import text from './text.js';
+let version = ConfigModule().get('version');
+let name =  ConfigModule().get('name');
 
-// let version = ConfigModule().get('version');
-let version = '1.0.2';
 const program = new Command();
 
 program
     .version (version)
-    .description('CLI for managing customers')
+    .description(`${name} ::: a CLI for managing customers`)
 
     const questions = [
     {
@@ -70,6 +72,11 @@ program
     .description('Find a customer')
     .action(firstname => findCustomer(firstname));
 
+program
+    .command('clone website <url>')
+    .alias('c')
+    .description('Clone a website')
+    .action(addURL => text(url));
     
 // program
 //     .command('add')
@@ -89,7 +96,14 @@ program
 //     }
 //   });
 
-// program.parse(process.argv);
+if (process.env.RUNNINGTEST === 'true') {
+    console.log(`program termination suppressed due to test.`)
+    program.exitOverride(process.argv);
+} else {
+    console.log(`program running normally.`)
+
+    program.parse(process.argv);
+}
 
 function cli() {
     program.exitOverride()
