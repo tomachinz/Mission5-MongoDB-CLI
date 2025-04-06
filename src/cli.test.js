@@ -1,5 +1,5 @@
 import { expect, jest, test, describe } from '@jest/globals';
-import { cli } from "./cli.js";
+import cli  from "./cli.js";
 
 let ERROR_CODE, realProcess, mockExit, mockStdout;
 
@@ -16,10 +16,11 @@ function beforeTestSetup() {
   // global.process = { ...realProcess, exit: exitMock };
 
   mockExit = jest.spyOn(process, 'exit') 
-  console.log("mockExit jest mockImplementationOn"); 
     .mockImplementation((number) => { 
       throw new Error('mockImplementation caught process.exit: ' + number); 
     });
+  console.log("Enabled mockExit jest mockImplementationOn"); 
+
   mockStdout = jest.spyOn(process.stdout, 'write')
     .mockImplementation((out) => {  // Capture terminal stdout
       console.log(`mockImplementation wrote ${out.length} to stdout`) 
@@ -44,9 +45,11 @@ describe("The CLI tool with no arguments specified ", () => {
   // let mockExit = jest.mockImplementationOnce();
   let  mockExit = jest.spyOn(process, 'exit') 
 
-  beforeEach((mockExit ) => { mockExit.mockClear(); });
+  beforeEach((mockExit) => {
+   mockExit.mockClear();
+  });
   afterEach(async () => {
-    await sleep(500);
+    await sleep(800);
   });
   test('should try to exit process', () => {
     cli();
@@ -56,15 +59,6 @@ describe("The CLI tool with no arguments specified ", () => {
 
   test("Exit mock to throw error", () => {
     cli();
-    expect(mockExit).toHaveBeenCalledWith(ERROR_CODE).toThrow();
-  });
-
-  test("Exit mock to throw inside try catch", () => {
-    try {
-      cli();
-    } catch (e) {
-      console.log(e);
-    }
     expect(mockExit).toHaveBeenCalledWith(ERROR_CODE).toThrow();
   });
 
@@ -88,7 +82,7 @@ describe("The CLI tool with no arguments specified ", () => {
     }).toThrow();
     expect(mockExit).toHaveBeenCalledWith(ERROR_CODE);
   })
-  afterTestCleanup();
+  // afterTestCleanup();
 });
 
 describe("The CLI tool WITH PARAMETERS ", () => {

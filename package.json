@@ -1,11 +1,11 @@
 {
   "name": "mongo-loader",
-  "productName": "🧜‍♂️ Mongo🔥Loader 🕷️",
-  "version": "1.0.2",
+  "productName": "🧜‍♂️ Mongo Loader 🔥",
+  "version": "1.0.3",
   "description": "a CLI for bulk loading mongodb",
   "main": "src/main.js",
   "scripts": {
-    "cli": "node src/cli.js",
+    "cli": "node src/cli.js -- ",
     "start": "electron-forge start",
     "watch": "watch electron-forge start",
     "build": " electron-builder install-app-deps && electron-forge make",

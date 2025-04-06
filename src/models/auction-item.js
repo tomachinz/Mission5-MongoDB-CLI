@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 const auctionItemSchema = mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    start_price: { type: Number, required: true },
-    reserve_price: { type: Number, required: true }
+    reserve_price: { type: Number, required: true, min: 1, max: 1000000 },
+    start_price: { type: Number, min: 1, max: 10000, required: (reserve_price, start_price) => { return (reserve_price > start_price) } },
 });
 
 export default mongoose.model('AuctionItem', auctionItemSchema);
