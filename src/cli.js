@@ -33,11 +33,10 @@ program
     .argument('<description>', 'Description of the auction item')
     .argument('<reserve_price>', 'Reserve price of the auction item')
     .argument('<start_price>', 'Start price of the auction item')
-    .option('-d, --debug', 'output extra debugging')
+    .option('-v, --debug', 'output extra debugging')
     .action((title, description, reserve_price, start_price, options, command) => {
-         if (options.debug) {
-            console.error('Called %s with options %o', command.name(), options);
-         }
+        printDebug(options, command);
+
         const errors = () => {
             if (!isText(title)) { return `Please enter a title ${title}`; }
             if (!isText(description)) { return `Please enter a title ${description}`; }
@@ -66,10 +65,16 @@ program
     .option('-v, --debug', 'output extra debugging')
     .action((firstname, lastname, phone, email, options, command) => {
         printDebug(options, command);
-        if (!isText(firstname)) { return 'Please enter a firstname'; }
-        if (!isText(lastname)) { return 'Please enter a lastname'; }
-        if (!isText(phone)) { return 'Please enter a phone'; }
-        if (!isText(email)) { return 'Please enter an email'; }
+         const errors = () => {
+            if (!isText(firstname)) { return 'Please enter a firstname'; }
+            if (!isText(lastname)) { return 'Please enter a lastname'; }
+            if (!isText(phone)) { return 'Please enter a phone'; }
+            if (!isText(email)) { return 'Please enter an email'; }
+        }
+        if (errors.length > 0 ) {
+            console.error(errors);
+            return;
+        }
        addCustomer({firstname, lastname, phone, email});
     });
         
@@ -98,19 +103,17 @@ program
 //     .action(url  => text(url));
  
 
-        program.parse(process.argv);
-process.stdout.write(`Connecting to MongoDB...   ${dbstring}`);  // clear current text
-console.log();
-console.log(`Connected to ${dbstring}`);
+
 
 
 function cli(args) {
     if (process.env.RUNNINGTEST === 'true') {
         console.log(`exitOverride ${process.env.RUNNINGTEST}`)
-       return program.exitOverride(args);
+        program.exitOverride(args);
     } else {
-        return program.parse(process.argv);
+        console.log(`Connected to ${dbstring}`);
+        program.parse(process.argv);
     }
 }
-// cli()
+cli()
 export default cli;

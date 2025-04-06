@@ -16,7 +16,7 @@ const addAuctionItem = (auctionItem) => {
     .create(auctionItem)
     .then((auctionItem) => {
       console.info(`Auction Item ${auctionItem.title} with reserve of $${auctionItem.reserve_price} created`);
-      mongoose.connection.save(); 
+      // mongoose.save(); 
       mongoose.connection.close();
   });
 }
@@ -26,7 +26,7 @@ const addCustomer = (customer) => {
     .create(customer)
     .then((customer) => {
       console.info(`Customer ${customer.firstname} ${customer.lastname} created`);
-      mongoose.connection.save(); 
+      // mongoose.save(); 
       mongoose.connection.close();
     });
 
