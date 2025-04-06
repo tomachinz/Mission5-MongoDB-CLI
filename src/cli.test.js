@@ -1,7 +1,7 @@
-import cli from "./cli.js";
 import { expect, jest, test, describe } from '@jest/globals';
+import { cli } from "./cli.js";
 
-let ERROR_CODE, realProcess, mockExit, mockStdout, mockProcessExit;
+let ERROR_CODE, realProcess, mockExit, mockStdout;
 
 function beforeTestSetup() {
   ERROR_CODE = 1;
@@ -12,43 +12,45 @@ function beforeTestSetup() {
   // it would crash with an error like:
   // `TypeError: Cannot read property 'NODE_ENV' of undefined`.
   realProcess = process;
-  const exitMock = jest.fn();
-  global.process = { ...realProcess, exit: exitMock };
+  // const exitMock = jest.fn();
+  // global.process = { ...realProcess, exit: exitMock };
 
   mockExit = jest.spyOn(process, 'exit') 
+  console.log("mockExit jest mockImplementationOn"); 
     .mockImplementation((number) => { 
       throw new Error('mockImplementation caught process.exit: ' + number); 
     });
   mockStdout = jest.spyOn(process.stdout, 'write')
     .mockImplementation((out) => {  // Capture terminal stdout
-      // console.log(`mockImplementation wrote ${out.length} to stdout`) 
+      console.log(`mockImplementation wrote ${out.length} to stdout`) 
       return out;  
     });
 
-  mockProcessExit = jest.spyOn(process, 'exit').mockImplementation(((code) => { 
-    throw new Error(`mockImplementation process.exit(${code})`); // Forces the code to throw instead of exit
-  }));
 
-  beforeEach(() => { mockProcessExit.mockClear(); });
+  return { mockExit }
 }
 
 function afterTestCleanup() {
   mockExit.mockRestore();
   mockStdout.mockRestore();
-  mockProcessExit.mockRestore();
-  // global.process = realProcess;
   global.process = { ...realProcess };
-  // setTimeout(() => {
-  //   process.exit(0);
-  // }, 2600);
 }
 
 
 describe("The CLI tool with no arguments specified ", () => {
-  beforeTestSetup();
+  jest.mock('./database.js');
+  jest.mock('./ConfigModule.js');
+  jest.mock('./text.js');
+  // let mockExit = jest.mockImplementationOnce();
+  let  mockExit = jest.spyOn(process, 'exit') 
+
+  beforeEach((mockExit ) => { mockExit.mockClear(); });
+  afterEach(async () => {
+    await sleep(500);
+  });
   test('should try to exit process', () => {
     cli();
-    expect(exitMock).toHaveBeenCalledWith(ERROR_CODE);
+    expect(mockExit).toHaveBeenCalledWith(ERROR_CODE);
   });
 
 
@@ -86,11 +88,14 @@ describe("The CLI tool with no arguments specified ", () => {
     }).toThrow();
     expect(mockExit).toHaveBeenCalledWith(ERROR_CODE);
   })
-
+  afterTestCleanup();
 });
 
 describe("The CLI tool WITH PARAMETERS ", () => {
-  beforeTestSetup();
+  jest.mock('./database.js');
+  jest.mock('./ConfigModule.js');
+  jest.mock('./text.js');
+  let mockExit = beforeTestSetup();
 
   test("Test of add", () => {
     expect(() => {

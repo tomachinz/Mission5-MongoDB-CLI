@@ -1,0 +1,14 @@
+db.createUser( { user: "root",
+                 pwd: passwordPrompt(),  // Or  "<cleartext password>"
+                 roles: [ { role: "root", db: "admin" },
+                          { role: "readAnyDatabase", db: "admin" },
+                          "readWrite"] },
+    { w: "majority", wtimeout: 5000 })
+               
+
+
+db.createUser({ user: "tom", pwd: passwordPrompt(), roles: [{ role: "root", db: "mission5" }, { role: "root", db: "admin" }, { role: "root", db: "test" }] })
+    
+db.createUser({ user: "root", pwd: "Fd0)(mongo", roles: [{ role: "root", db: "mission5" }, { role: "root", db: "admin" }, { role: "root", db: "test" }] })
+    
+db.createUser({  user: "fucker", pwd: "fubar",  roles:[{ role: "userAdminAnyDatabase", db: "mission5" },{ role: "userAdminAnyDatabase", db: "admin" },{ role: "userAdminAnyDatabase", db: "test" }] })

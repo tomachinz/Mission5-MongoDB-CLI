@@ -2,8 +2,18 @@ import fs from 'node:fs';
 import Configstore from 'configstore';
 
 export default function ConfigModule() {
-    const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-    const config = new Configstore(packageJson.name, { // Create a Configstore instance.
+    let packageJson;
+    try {
+        packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+    } catch (e) {
+        packageJson = JSON.parse(fs.readFileSync('../package.json', 'utf8'));
+    }
+    const config = new Configstore(packageJson.productName, {}, {}); // Create a Configstore instance.
+    config.set({ // this will likely wipe defaults each time hmmm...
+        name: packageJson.name,
+        productName: packageJson.productName,
+        description: packageJson.description,
+        version:  packageJson.description,
         firstRun: Date.now(),
         lastRun: Date.now(),
         runs: 0,
@@ -28,9 +38,6 @@ export default function ConfigModule() {
             domain: "damnative.com",
             hits: [1737779206588, 1737779206589]
         }]
-    });
-
-
-    // console.log(`config: ${JSON.stringify(config)}`);
+    })
     return config;
 }

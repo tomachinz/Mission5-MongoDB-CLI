@@ -1,19 +1,21 @@
 import  puppeteer from 'puppeteer';
-import fs from 'node:fs';
-// const puppeteer = require('puppeteer');
+import { writeFileSync} from 'node:fs';
+import path from 'node:path';
 
-export default (async () => {
+export default async (url) =>  {
+        console.log(`url is ${url}`);
+
     const browser = await puppeteer.launch({
-        headless: true
+        headless: false
     });
     const page = (await browser.pages())[0];
-    await page.goto('https://www.funk.co.nz/');
+    await page.goto(url);
     const extractedText = await page.$eval('*', (el) => el.innerText);
     const extractedLinks = await page.$eval('*', (anchor) => anchor.src);
     console.log(extractedText);
     console.log(extractedLinks);
-    
     let file = path.resolve(path.join(__dirname, "websites", page.url.hostname))
-    fs.writeFileSync(file, extractedText + extractedLinks)
+    console.log(file)
+    writeFileSync(file, extractedText + extractedLinks)
     await browser.close();
-})();
+}
