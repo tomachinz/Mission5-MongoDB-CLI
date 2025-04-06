@@ -140,7 +140,7 @@ program
     .command('page')
     .alias('p')
     .description('Clone 1 page from a URL, use --save to save to database')
-    .option('-s', '--save', "save to database after cloning")
+    .option('--save', "save to database after cloning")
     .option('--debug', 'output extra debugging')
     .argument('<address>', 'Address URL of the link to copy eg https://www.funk.co.nz/menu/about.php')
     .action(async (address, options) => {

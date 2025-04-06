@@ -24,6 +24,10 @@ Put the following through a bash script:
 ./cli add   "Fantastic Title" "Boring description" 123 10
 ./cli add   "Causes Error Title" "Wrong Price" 12.3 100
 ./cli add --debug  "Should Cause Error" "Ran outa time for full validation... allowed wrong Price" 12.3 100
+./cli page 
+./cli page --save https://www.trademe.co.nz/a/marketplace/music-instruments/cds/new-zealand/artist-t/listing/5249730669 
+./cli page        https://www.trademe.co.nz/a/marketplace/music-instruments/cds/new-zealand/artist-t/listing/5249730669 
+./cli page --save https://www.trademe.co.nz/a/marketplace/music-instruments/instruments/guitar-bass/guitar-amps/listing/5254820117
 ./cli addcust
 ./cli addcust --debug firstname lastame phone email      
 ./cli find
@@ -31,7 +35,7 @@ Put the following through a bash script:
 ./cli findcust tom            
 ./cli update 
 ./cli update 67f1d4083403edc9fe2f11c8 "Pile of Utter Junk" "Really nice junk. Unlike this description." 100 50  
-  delete [options] <_id>                                                     
+./cli delete [options] <_id>                                                     
   page|p [options] <address>                                                 
   list|l                                                                  
   export|e                                                

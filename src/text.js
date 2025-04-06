@@ -59,7 +59,7 @@ export default async (inputurl) => {
     // const start_price = await page.waitForSelector('tm-buy-now-box__price p-h1').innerText;// page.evaluate(el => el.textContent, element) page.strong();
     // marketplace-summary-image-lazy-loader__thumbnail contain ng-star-inserted
 
-    start_price = 1;
+    const start_price = 1;
     const searchImages = await page.evaluate(() => {
         const srcArray = Array.from(document.images).map((image) => image.src);
         const uniqueUrlArray = [...new Set(srcArray)];
