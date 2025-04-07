@@ -20,7 +20,7 @@ Put the following through a bash script:
 ./cli add 
 ./cli a "Fantastic Title"
 ./cli add  "Fantastic Title" "Boring description"
-./cli a --debug  "Fantastic Title" "Boring description" 123
+./cli a --debug  "Fantastic Title" "Boring description" 123 10
 ./cli add   "Fantastic Title" "Boring description" 123 10
 ./cli add   "Causes Error Title" "Wrong Price" 12.3 100
 ./cli add --debug  "Should Cause Error" "Ran outa time for full validation... allowed wrong Price" 12.3 100

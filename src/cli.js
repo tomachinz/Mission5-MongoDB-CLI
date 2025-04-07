@@ -46,8 +46,8 @@ program
         if (!isNumber(reserve_price)) errors+= `Please enter a title ${reserve_price}`; 
         if (!isNumber(start_price)) errors+= `Please enter a title ${start_price}`; 
         if (reserve_price < start_price) errors+= `Reserve price must be greater than start price ${reserve_price} > ${start_price}`; 
-        // errors += `Please `;
-        if (errors.length > 2 ) {
+
+        if (errors.length > 2) {
             console.error( `ERROR: ${errors}`);
             return;
         }
@@ -113,11 +113,6 @@ program
             console.error("💩", errors);
             return;
         }
-
-
-        
-
-
 
         updateAuctionItem(_id, { title, description, reserve_price, start_price});
     });
