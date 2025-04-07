@@ -36,7 +36,7 @@ program
     .argument('<description>', 'Description of the auction item')
     .argument('<reserve_price>', 'Reserve price of the auction item')
     .argument('<start_price>', 'Start price of the auction item')
-    .option('-v, --debug', 'output extra debugging')
+    .option('--debug', 'output extra debugging')
     .action((title, description, reserve_price, start_price, options, command) => {
         printDebug(options, command);
         let errors ="💩";
@@ -46,9 +46,9 @@ program
         if (!isNumber(reserve_price)) errors+= `Please enter a title ${reserve_price}`; 
         if (!isNumber(start_price)) errors+= `Please enter a title ${start_price}`; 
         if (reserve_price < start_price) errors+= `Reserve price must be greater than start price ${reserve_price} > ${start_price}`; 
-        
-        console.error( errors);
-        if (errors.length > 1 ) {
+        // errors += `Please `;
+        if (errors.length > 2 ) {
+            console.error( `ERROR: ${errors}`);
             return;
         }
         addAuctionItem({title, description, reserve_price, start_price});

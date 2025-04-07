@@ -15,7 +15,8 @@ let itemCount = await AuctionItem.countDocuments({  });
 const addAuctionItem = (auctionItem) => {
 
   if ( auctionItem.start_price > auctionItem.reserve_price ) {
-    console.error(`Start price must be less than reserve price`);
+    console.log(`Start price must be less than reserve price`);
+    mongoose.connection.close();
     return;
   } else {
     console.info(`Auction Item ${itemCount} ${auctionItem.title} with reserve of $${auctionItem.reserve_price}, start bid $${auctionItem.start_price} created`);
