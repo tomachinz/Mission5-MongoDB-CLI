@@ -6,10 +6,10 @@ import ConfigModule from './ConfigModule.js';
 import text from './text.js';
 import fs, { writeFileSync} from 'node:fs';
 import path from 'node:path';
-
+// import TraverseDOM  from './TraverseDOM.js';
 const program = new Command();
 let config = ConfigModule();
-
+// let nodeToString = new TraverseDOM();
 function isText(t) {
     if (t.length > 4 && isNaN(t)) { return true; }; return false;
 }
@@ -139,10 +139,11 @@ program
     .option('--debug', 'output extra debugging')
     .argument('<address>', 'Address URL of the link to copy eg https://www.funk.co.nz/menu/about.php')
     .action(async (address, options) => {
-        const scraped = await text(address);
-        if (options.debug) {
-            console.log(scraped);
-        }
+        const scraped = await text(address); // scrape page off web
+        // const fullText = nodeToString.nodelistToText(scraped); // convert to text
+        // if (options.debug) {
+        //     console.log(fullText);
+        // }
         if (options.save) {
             const title = scraped.title;
             const description = scraped.description;

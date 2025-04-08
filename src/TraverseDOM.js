@@ -1,6 +1,6 @@
 class TraverseDOM {
 	constructor(nodelist) {
-		this.init();
+		// this.init();
         this.depth = 0;
         this.serial = 1;
         this.context = "nodejs";
@@ -55,5 +55,4 @@ class TraverseDOM {
         this.traverseNode(docbody, "body");
     }
 }
-
 export default TraverseDOM
